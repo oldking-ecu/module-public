@@ -1,4 +1,4 @@
-/**
+﻿/**
  * @file public.h
  * @author wwyyy (1046685883@qq.com)
  * @link https://gitee.com/oldking-ecu
@@ -12,6 +12,14 @@
 #ifndef PUBLIC_H__
 #define PUBLIC_H__
 #include "type.h"
+
+
+/**
+ * @brief 编译检查符号大小,超过指定大小时编译错误
+ * 
+ */
+#define STATIC_ASSERT_SIZE(sym, val) typedef char __STATIC_ASSERT_NAME_##sym[ (sizeof(sym) <= (val)) ? 1 : -1 ]
+
 
 #define NUM2VOIDP(num)  ((void *)num)
 #define ARRAY_NUM(arr)  (sizeof(arr) / sizeof((arr)[0]))
@@ -111,7 +119,7 @@ uint8 AsciiToHex(const uint8 *ascii);
  * @param asciiSize: ascii 字节数（必须为偶数）
  * @param hexs: 输出 hex 缓冲
  */
-void AsciisToHexs(const uint8 *asciis, uint16 asciiSize, uint8 *hexs);
+uint8 AsciisToHexs(const uint8 *asciis, uint16 asciiSize, uint8 *hexs);
 
 /**
  * @brief 计算一段 ascii 格式十六进制数字的和（按字节求和并截断到 8bit）

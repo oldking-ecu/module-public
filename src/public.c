@@ -1,4 +1,4 @@
-/**
+﻿/**
  * @file public.c
  * @author wwyyy (1046685883@qq.com)
  * @link https://gitee.com/oldking-ecu
@@ -74,12 +74,13 @@ uint8 AsciiToHex(const uint8 *ascii)
  * @param asciiSize: ascii 字节数（必须为偶数）
  * @param hexs: 输出 hex 缓冲
  */
-void AsciisToHexs(const uint8 *asciis, uint16 asciiSize, uint8 *hexs)
+uint8 AsciisToHexs(const uint8 *asciis, uint16 asciiSize, uint8 *hexs)
 {
 	uint16 i, j;
 	for (i = 0, j = 0; i < asciiSize; i++, j += 2) {
 		hexs[i] = AsciiToHex(asciis + j);
 	}
+	return 0;
 }
 
 /**
@@ -166,10 +167,11 @@ uint8 CalcXor(const uint8 *src, uint16 size)
  */
 uint16 Combine2BytesLittle(const uint8 *src)
 {
-	uint16 temp;
-	temp = src[1];
+    uint16 temp;
+    char *tmp8 = (char *)src;
+	temp = tmp8[1];
 	temp <<= 8;
-	temp |= src[0];
+	temp |= tmp8[0];
 	return temp;
 }
 uint16 Combine2BytesBig(const uint8 *src)
@@ -863,7 +865,7 @@ uint32 RounddownPowOf2(uint32 n)
 {
 	if (n < 2)
 		return n;
-	if (n & n - 1)    // 已经对齐
+	if (n & (n - 1))    // 已经对齐
 		return n;
 #if 0
     n |= n >> 1;
@@ -893,7 +895,7 @@ uint32 RoundupPowOf2(uint32 n)
 {
 	if (n == 0)
 		return 1;
-	if (n & n - 1)    // 已经对齐
+	if (n & (n - 1))    // 已经对齐
 		return n;
 	n--;
 	n |= n >> 1;
